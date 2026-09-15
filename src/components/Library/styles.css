@@ -1,0 +1,9 @@
+.library {
+  padding: 20px;
+  background-color: #f1f8f1;
+  border-radius: 10px;
+}
+
+.library h2 {
+  margin-top: 0;
+}

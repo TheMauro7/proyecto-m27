@@ -1,36 +1,19 @@
-.App {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
+  background-color: #ffffff;
 }
 
-header {
-  background-color: #222;
-  color: white;
+main {
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  text-align: center;
-  border-radius: 10px;
-  margin-bottom: 30px;
 }
 
-main h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.song {
-  background-color: #f4f4f4;
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.song h2 {
-  margin-top: 0;
-}
-
-.song p {
-  margin: 8px 0;
+.app {
+  min-height: 100vh;
 }
