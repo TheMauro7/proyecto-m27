@@ -1,73 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Header from "./components/Header/Header";
+import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
-import Library from "./components/Library/Library";
+import SongDetail from "./components/SongDetail/SongDetail";
 
-import "./app.css";
+import useFetch from "./hooks/useFetch";
 
-function App() {
-  // Resultados ficticios de búsqueda
-  const [searchResults] = useState([{
-    id: 1,
-    title: "Ameri",
-    artist: "Duki",
-    album: "Ameri",
-    duration: "3:19",
-  },
-  {
-    id: 2,
-    title: "Goteo",
-    artist: "Duki",
-    album: "Super Sangre Joven",
-    duration: "3:05",
-  },
-  {
-    id: 3,
-    title: "Antes de Perderte",
-    artist: "Duki",
-    album: "Antes de Ameri",
-    duration: "2:46",
-  },
-  ]);
+const App = () => {
+    const [artist, setArtist] = useState("");
 
-  // Biblioteca inicialmente vacía
-  const [library, setLibrary] = useState([]);
+   const url = artist
+    ? `https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=${encodeURIComponent(
+          artist
+      )}`
+    : "";
 
-  // Se ejecuta cada vez que library cambia
-  useEffect(() => {
-    console.log("La biblioteca se ha actualizado:", library);
-  }, [library]);
+    const { data, loading, error, refetch } = useFetch(url);
 
-  // Agregar canción a la biblioteca
-  const addToLibrary = (song) => {
-    setLibrary((currentLibrary) => {
-      // Evitar canciones repetidas
-      const alreadyExists = currentLibrary.some(
-        (item) => item.id === song.id
-      );
+    const handleSearch = (searchTerm) => {
+        setArtist(searchTerm);
+    };
 
-      if (alreadyExists) {
-        return currentLibrary;
-      }
+    const albums = data?.album || [];
 
-      return [...currentLibrary, song];
-    });
-  };
+    console.log("ARTISTA:", artist);
+    console.log("DATA:", data);
+    console.log("ALBUMS:", albums);
 
-  return (
-    <div className="app">
-      <Header appName="Music App" />
+    return (
+        <div className="App">
+            <Header appName="Music Library" />
 
-      <main>
-        <SearchResults
-          songs={searchResults}
-          onAdd={addToLibrary}
-        />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            <SearchBar onSearch={handleSearch} />
 
-        <Library songs={library} />
-      </main>
-    </div>
-  );
-}
+                            {loading && <p>Cargando...</p>}
+
+                            {error && (
+                                <div>
+                                    <p>
+                                        Hubo un problema al cargar los datos.
+                                        Intenta nuevamente.
+                                    </p>
+
+                                    <button onClick={refetch}>
+                                        Reintentar
+                                    </button>
+                                </div>
+                            )}
+
+                            {!loading && !error && artist && (
+                                <SearchResults albums={albums} />
+                            )}
+                        </>
+                    }
+                />
+
+                <Route
+                    path="/song/:id"
+                    element={<SongDetail />}
+                />
+            </Routes>
+        </div>
+    );
+};
 
 export default App;
