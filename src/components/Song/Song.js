@@ -1,30 +1,30 @@
-import React from "react";
-import "./styles.css";
+import React, { useState } from "react";
+import {
+    SongCard,
+    SongTitle,
+    SongArtist,
+    SongButton,
+} from "./styles";
 
-const Song = ({ title, artist, album, duration, onAdd }) => {
-  return (
-    <div className="song">
-      <h3>{title}</h3>
+const Song = ({ song }) => {
+    const [favorite, setFavorite] = useState(false);
 
-      <p>
-        <strong>Artista:</strong> {artist}
-      </p>
+    return (
+        <SongCard>
+            <SongTitle>{song.name}</SongTitle>
 
-      <p>
-        <strong>Álbum:</strong> {album}
-      </p>
+            <SongArtist>
+                {song.artist}
+            </SongArtist>
 
-      <p>
-        <strong>Duración:</strong> {duration}
-      </p>
-
-      {onAdd && (
-        <button onClick={onAdd}>
-          Agregar a mi biblioteca
-        </button>
-      )}
-    </div>
-  );
+            <SongButton
+                favorite={favorite}
+                onClick={() => setFavorite(!favorite)}
+            >
+                {favorite ? "Quitar favorito" : "Agregar favorito"}
+            </SongButton>
+        </SongCard>
+    );
 };
 
 export default Song;

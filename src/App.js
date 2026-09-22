@@ -5,17 +5,18 @@ import Header from "./components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import SongDetail from "./components/SongDetail/SongDetail";
+import { AppContainer } from "./components/AppStyles";
 
 import useFetch from "./hooks/useFetch";
 
 const App = () => {
     const [artist, setArtist] = useState("");
 
-   const url = artist
-    ? `https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=${encodeURIComponent(
-          artist
-      )}`
-    : "";
+    const url = artist
+        ? `https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=${encodeURIComponent(
+              artist
+          )}`
+        : "";
 
     const { data, loading, error, refetch } = useFetch(url);
 
@@ -30,7 +31,7 @@ const App = () => {
     console.log("ALBUMS:", albums);
 
     return (
-        <div className="App">
+        <AppContainer>
             <Header appName="Music Library" />
 
             <Routes>
@@ -67,7 +68,7 @@ const App = () => {
                     element={<SongDetail />}
                 />
             </Routes>
-        </div>
+        </AppContainer>
     );
 };
 

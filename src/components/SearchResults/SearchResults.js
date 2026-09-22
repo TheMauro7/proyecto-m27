@@ -1,35 +1,59 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import {
+    ResultsContainer,
+    ResultsTitle,
+    AlbumCard,
+    AlbumTitle,
+    AlbumInfo,
+    DetailsLink,
+} from "./styles";
+
 const SearchResults = ({ albums }) => {
     console.log("ALBUMS RECIBIDOS:", albums);
 
     if (!albums || albums.length === 0) {
-        return <p>No se encontraron álbumes.</p>;
+        return (
+            <ResultsContainer>
+                <AlbumInfo>
+                    No se encontraron álbumes.
+                </AlbumInfo>
+            </ResultsContainer>
+        );
     }
 
     return (
-        <div>
-            <h2>Resultados de búsqueda</h2>
+        <ResultsContainer>
+            <ResultsTitle>
+                Resultados de búsqueda
+            </ResultsTitle>
 
             {albums.map((album) => (
-                <div key={album.idAlbum}>
-                    <h3>{album.strAlbum}</h3>
+                <AlbumCard key={album.idAlbum}>
+                    <AlbumTitle>
+                        {album.strAlbum}
+                    </AlbumTitle>
 
-                    <p>
+                    <AlbumInfo>
                         Artista: {album.strArtist}
-                    </p>
+                    </AlbumInfo>
 
-                    <p>
-                        Año: {album.intYearReleased || "No disponible"}
-                    </p>
+                    <AlbumInfo>
+                        Año:{" "}
+                        {album.intYearReleased ||
+                            "No disponible"}
+                    </AlbumInfo>
 
-                    <Link to={`/song/${album.idAlbum}`}>
+                    <DetailsLink
+                        as={Link}
+                        to={`/song/${album.idAlbum}`}
+                    >
                         Ver detalles
-                    </Link>
-                </div>
+                    </DetailsLink>
+                </AlbumCard>
             ))}
-        </div>
+        </ResultsContainer>
     );
 };
 

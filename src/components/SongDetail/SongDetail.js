@@ -1,10 +1,23 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+
 import useFetch from "../../hooks/useFetch";
+
+import {
+    DetailContainer,
+    BackLink,
+    AlbumTitle,
+    ArtistName,
+    AlbumInfo,
+    AlbumDescription,
+    AlbumImage,
+} from "./styles";
+
 const SongDetail = () => {
     const { id } = useParams();
 
     const url = `https://www.theaudiodb.com/api/v1/json/2/album.php?m=${id}`;
+
     const { data, loading, error, refetch } = useFetch(url);
 
     if (loading) {
@@ -33,39 +46,44 @@ const SongDetail = () => {
     }
 
     return (
-        <div>
-            <Link to="/">
+        <DetailContainer>
+            <BackLink as={Link} to="/">
                 ← Regresar
-            </Link>
+            </BackLink>
 
-            <h1>{album.strAlbum}</h1>
+            <AlbumTitle>
+                {album.strAlbum}
+            </AlbumTitle>
 
-            <h2>{album.strArtist}</h2>
+            <ArtistName>
+                {album.strArtist}
+            </ArtistName>
 
-            <p>
-                Año de lanzamiento:{" "}
+            <AlbumInfo>
+                <strong>Año de lanzamiento:</strong>{" "}
                 {album.intYearReleased || "No disponible"}
-            </p>
+            </AlbumInfo>
 
             {album.strGenre && (
-                <p>
-                    Género: {album.strGenre}
-                </p>
+                <AlbumInfo>
+                    <strong>Género:</strong>{" "}
+                    {album.strGenre}
+                </AlbumInfo>
             )}
 
             {album.strDescriptionEN && (
-                <p>
+                <AlbumDescription>
                     {album.strDescriptionEN}
-                </p>
+                </AlbumDescription>
             )}
 
             {album.strAlbumThumb && (
-                <img
+                <AlbumImage
                     src={album.strAlbumThumb}
                     alt={album.strAlbum}
                 />
             )}
-        </div>
+        </DetailContainer>
     );
 };
 
