@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
-
+import { Routes, Route, Link } from "react-router-dom";
 import Header from "./components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import SongDetail from "./components/SongDetail/SongDetail";
+import Library from "./components/Library/Library";
+
 import { AppContainer } from "./components/AppStyles";
 
 import useFetch from "./hooks/useFetch";
@@ -26,50 +27,53 @@ const App = () => {
 
     const albums = data?.album || [];
 
-    console.log("ARTISTA:", artist);
-    console.log("DATA:", data);
-    console.log("ALBUMS:", albums);
+return (
+    <AppContainer>
+        <Header appName="Music Library" />
 
-    return (
-        <AppContainer>
-            <Header appName="Music Library" />
+        <Link to="/library">Mi biblioteca</Link>
 
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <SearchBar onSearch={handleSearch} />
+        <Routes>
+            <Route
+                path="/"
+                element={
+                    <>
+                        <SearchBar onSearch={handleSearch} />
 
-                            {loading && <p>Cargando...</p>}
+                        {loading && <p>Cargando...</p>}
 
-                            {error && (
-                                <div>
-                                    <p>
-                                        Hubo un problema al cargar los datos.
-                                        Intenta nuevamente.
-                                    </p>
+                        {error && (
+                            <div>
+                                <p>
+                                    Hubo un problema al cargar los datos.
+                                    Intenta nuevamente.
+                                </p>
 
-                                    <button onClick={refetch}>
-                                        Reintentar
-                                    </button>
-                                </div>
-                            )}
+                                <button onClick={refetch}>
+                                    Reintentar
+                                </button>
+                            </div>
+                        )}
 
-                            {!loading && !error && artist && (
-                                <SearchResults albums={albums} />
-                            )}
-                        </>
-                    }
-                />
+                        {!loading && !error && artist && (
+                            <SearchResults albums={albums} />
+                        )}
+                    </>
+                }
+            />
 
-                <Route
-                    path="/song/:id"
-                    element={<SongDetail />}
-                />
-            </Routes>
-        </AppContainer>
-    );
-};
+            <Route
+                path="/song/:id"
+                element={<SongDetail />}
+            />
+
+            <Route
+                path="/library"
+                element={<Library />}
+            />
+        </Routes>
+    </AppContainer>
+);
+}
 
 export default App;

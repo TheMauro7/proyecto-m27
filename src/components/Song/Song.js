@@ -11,17 +11,19 @@ const Song = ({ song }) => {
 
     return (
         <SongCard>
-            <SongTitle>{song.name}</SongTitle>
+            <SongTitle>{song.title}</SongTitle>
 
             <SongArtist>
                 {song.artist}
             </SongArtist>
 
             <SongButton
-                favorite={favorite}
+                $favorite={favorite}
                 onClick={() => setFavorite(!favorite)}
             >
-                {favorite ? "Quitar favorito" : "Agregar favorito"}
+                {favorite
+                    ? "Quitar favorito"
+                    : "Agregar favorito"}
             </SongButton>
         </SongCard>
     );

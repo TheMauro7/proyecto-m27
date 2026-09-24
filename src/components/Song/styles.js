@@ -23,8 +23,8 @@ export const SongButton = styled.button`
     border: none;
     border-radius: ${({ theme }) => theme.borderRadius};
 
-    background-color: ${({ favorite, theme }) =>
-        favorite
+    background-color: ${({ $favorite, theme }) =>
+        $favorite
             ? theme.colors.danger
             : theme.colors.primary};
 

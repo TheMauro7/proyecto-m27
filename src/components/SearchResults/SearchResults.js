@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addSong } from "../../redux/libraryActions";
 
 import {
     ResultsContainer,
@@ -11,7 +13,18 @@ import {
 } from "./styles";
 
 const SearchResults = ({ albums }) => {
-    console.log("ALBUMS RECIBIDOS:", albums);
+    const dispatch = useDispatch();
+
+   const handleAddToLibrary = (album) => {
+    const song = {
+        id: album.idAlbum,
+        title: album.strAlbum,
+        artist: album.strArtist,
+        album: album.strAlbum,
+    };
+
+    dispatch(addSong(song));
+};
 
     if (!albums || albums.length === 0) {
         return (
@@ -51,6 +64,12 @@ const SearchResults = ({ albums }) => {
                     >
                         Ver detalles
                     </DetailsLink>
+
+                    <button
+                        onClick={() => handleAddToLibrary(album)}
+                    >
+                        Agregar a mi biblioteca
+                    </button>
                 </AlbumCard>
             ))}
         </ResultsContainer>
