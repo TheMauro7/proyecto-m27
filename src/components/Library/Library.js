@@ -1,45 +1,39 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Song from "../Song/Song";
-import { removeSong } from "../../redux/libraryActions";
+import { removeSong } from "../../redux/slice/librarySlice";
 
 import {
-    LibraryContainer,
-    LibraryTitle,
-    EmptyMessage,
+  LibraryContainer,
+  LibraryTitle,
+  EmptyMessage,
+  LibraryCard,
+  RemoveButton,
 } from "./styles";
 
 const Library = () => {
-    const songs = useSelector((state) => state.library);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const songs = useSelector((state) => state.library);
 
-    const handleRemoveSong = (songId) => {
-        dispatch(removeSong(songId));
-    };
+  return (
+    <LibraryContainer>
+      <LibraryTitle>Mi biblioteca</LibraryTitle>
 
-    return (
-        <LibraryContainer>
-            <LibraryTitle>Mi biblioteca</LibraryTitle>
-
-            {songs.length === 0 ? (
-                <EmptyMessage>
-                    No tienes canciones en tu biblioteca.
-                </EmptyMessage>
-            ) : (
-                songs.map((song) => (
-                    <div key={song.id}>
-                      <Song song={song} />
-
-                        <button
-                            onClick={() => handleRemoveSong(song.id)}
-                        >
-                            Eliminar
-                        </button>
-                    </div>
-                ))
-            )}
-        </LibraryContainer>
-    );
+      {songs.length === 0 ? (
+        <EmptyMessage>Tu biblioteca está vacía.</EmptyMessage>
+      ) : (
+        songs.map((song) => (
+          <LibraryCard key={song.idAlbum}>
+            <h3>{song.strAlbum}</h3>
+            <p><strong>Artista:</strong> {song.strArtist}</p>
+            <p><strong>Álbum:</strong> {song.strAlbum}</p>
+            <RemoveButton onClick={() => dispatch(removeSong(song.idAlbum))}>
+              Eliminar
+            </RemoveButton>
+          </LibraryCard>
+        ))
+      )}
+    </LibraryContainer>
+  );
 };
 
 export default Library;

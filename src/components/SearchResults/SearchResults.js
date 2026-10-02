@@ -1,79 +1,85 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addSong } from "../../redux/slice/librarySlice";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addSong } from "../../redux/libraryActions";
 
 import {
-    ResultsContainer,
-    ResultsTitle,
-    AlbumCard,
-    AlbumTitle,
-    AlbumInfo,
-    DetailsLink,
+  ResultsContainer,
+  ResultsTitle,
+  AlbumCard,
+  AlbumTitle,
+  AlbumInfo,
+  ActionButton,
+  DetailsLink,
 } from "./styles";
 
-const SearchResults = ({ albums }) => {
-    const dispatch = useDispatch();
+const SearchResults = () => {
+  const dispatch = useDispatch();
 
-   const handleAddToLibrary = (album) => {
-    const song = {
-        id: album.idAlbum,
-        title: album.strAlbum,
-        artist: album.strArtist,
-        album: album.strAlbum,
-    };
+  const { results, loading, error } = useSelector(
+    (state) => state.search
+  );
 
-    dispatch(addSong(song));
-};
+  console.log("RESULTADOS:", results);
 
-    if (!albums || albums.length === 0) {
-        return (
-            <ResultsContainer>
-                <AlbumInfo>
-                    No se encontraron álbumes.
-                </AlbumInfo>
-            </ResultsContainer>
-        );
-    }
+  if (loading) {
+    return <p>Cargando álbumes...</p>;
+  }
 
-    return (
-        <ResultsContainer>
-            <ResultsTitle>
-                Resultados de búsqueda
-            </ResultsTitle>
+  if (error) {
+    return <p>{error}</p>;
+  }
 
-            {albums.map((album) => (
-                <AlbumCard key={album.idAlbum}>
-                    <AlbumTitle>
-                        {album.strAlbum}
-                    </AlbumTitle>
+  if (results.length === 0) {
+    return null;
+  }
 
-                    <AlbumInfo>
-                        Artista: {album.strArtist}
-                    </AlbumInfo>
+  return (
+    <ResultsContainer>
+      <ResultsTitle>
+        Resultados ({results.length} álbumes)
+      </ResultsTitle>
 
-                    <AlbumInfo>
-                        Año:{" "}
-                        {album.intYearReleased ||
-                            "No disponible"}
-                    </AlbumInfo>
+      {results.map((album, index) => (
+        <AlbumCard
+          key={album.idAlbum || `${album.strAlbum}-${index}`}
+        >
+          {album.strAlbumThumb && (
+            <img
+              src={album.strAlbumThumb}
+              alt={`Portada de ${album.strAlbum}`}
+              width="200"
+            />
+          )}
 
-                    <DetailsLink
-                        as={Link}
-                        to={`/song/${album.idAlbum}`}
-                    >
-                        Ver detalles
-                    </DetailsLink>
+          <AlbumTitle>
+            {album.strAlbum}
+          </AlbumTitle>
 
-                    <button
-                        onClick={() => handleAddToLibrary(album)}
-                    >
-                        Agregar a mi biblioteca
-                    </button>
-                </AlbumCard>
-            ))}
-        </ResultsContainer>
-    );
+          <AlbumInfo>
+            Artista: {album.strArtist}
+          </AlbumInfo>
+
+          <AlbumInfo>
+            Año: {album.intYearReleased || "No disponible"}
+          </AlbumInfo>
+
+          <ActionButton
+            onClick={() => dispatch(addSong(album))}
+          >
+            Agregar a mi biblioteca
+          </ActionButton>
+
+          <DetailsLink
+            as={Link}
+            to={`/song/${album.idAlbum}`}
+          >
+            Ver detalles
+          </DetailsLink>
+        </AlbumCard>
+      ))}
+    </ResultsContainer>
+  );
 };
 
 export default SearchResults;

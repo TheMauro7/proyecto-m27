@@ -20,3 +20,18 @@ export const LibraryTitle = styled.h2`
 export const EmptyMessage = styled.p`
     color: ${({ theme }) => theme.colors.gray};
 `;
+export const LibraryCard = styled.div`
+  padding: ${({ theme }) => theme.spacing.medium};
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: ${({ theme }) => theme.borderRadius};
+`;
+
+export const RemoveButton = styled.button`
+  padding: 8px 14px;
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
+`;

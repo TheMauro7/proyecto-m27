@@ -1,37 +1,60 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSongs } from "../../redux/slice/searchSlice";
+
 import {
-    SearchForm,
-    SearchInput,
-    SearchButton,
+  SearchForm,
+  SearchInput,
+  SearchButton,
+  ErrorMessage,
+  RetryButton,
 } from "./styles";
 
-const SearchBar = ({ onSearch }) => {
-    const [search, setSearch] = useState("");
+const SearchBar = () => {
+  const [artist, setArtist] = useState("");
+  const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const { loading, error } = useSelector((state) => state.search);
 
-        const searchTerm = search.trim();
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-        if (searchTerm) {
-            onSearch(searchTerm);
-        }
-    };
+    if (artist.trim() !== "") {
+      dispatch(fetchSongs(artist.trim()));
+    }
+  };
 
-    return (
-        <SearchForm onSubmit={handleSubmit}>
-            <SearchInput
-                type="text"
-                placeholder="Buscar artista..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
+  const handleRetry = () => {
+    if (artist.trim() !== "") {
+      dispatch(fetchSongs(artist.trim()));
+    }
+  };
 
-            <SearchButton type="submit">
-                Buscar
-            </SearchButton>
-        </SearchForm>
-    );
+  return (
+    <>
+      <SearchForm onSubmit={handleSearch}>
+        <SearchInput
+          type="text"
+          placeholder="Busca un artista..."
+          value={artist}
+          onChange={(e) => setArtist(e.target.value)}
+        />
+
+        <SearchButton type="submit" disabled={loading}>
+          {loading ? "Cargando..." : "Buscar"}
+        </SearchButton>
+      </SearchForm>
+
+      {error && (
+        <ErrorMessage>
+          <p>{error}</p>
+          <RetryButton type="button" onClick={handleRetry}>
+            Reintentar
+          </RetryButton>
+        </ErrorMessage>
+      )}
+    </>
+  );
 };
 
 export default SearchBar;

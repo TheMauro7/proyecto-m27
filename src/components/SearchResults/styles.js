@@ -42,6 +42,26 @@ export const AlbumInfo = styled.p`
     color: ${({ theme }) => theme.colors.gray};
 `;
 
+export const ActionButton = styled.button`
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    margin-right: 8px;
+
+    border: none;
+    border-radius: ${({ theme }) => theme.borderRadius};
+
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.85;
+    }
+`;
+
 export const DetailsLink = styled.button`
     display: inline-block;
 

@@ -1,90 +1,70 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 
-import {
-    DetailContainer,
-    BackLink,
-    AlbumTitle,
-    ArtistName,
-    AlbumInfo,
-    AlbumDescription,
-    AlbumImage,
-} from "./styles";
-
 const SongDetail = () => {
-    const { id } = useParams();
+  const { idAlbum } = useParams();
 
-    const url = `https://www.theaudiodb.com/api/v1/json/2/album.php?m=${id}`;
+  const url = `https://www.theaudiodb.com/api/v1/json/123/album.php?m=${idAlbum}`;
 
-    const { data, loading, error, refetch } = useFetch(url);
+  console.log("ID DEL ÁLBUM:", idAlbum);
+  console.log("URL DETALLES:", url);
 
-    if (loading) {
-        return <p>Cargando...</p>;
-    }
+  const { data, loading, error } = useFetch(url);
 
-    if (error) {
-        return (
-            <div>
-                <p>
-                    Hubo un problema al cargar los datos.
-                    Intenta nuevamente.
-                </p>
+  if (loading) {
+    return <p>Cargando detalles...</p>;
+  }
 
-                <button onClick={refetch}>
-                    Reintentar
-                </button>
-            </div>
-        );
-    }
+  if (error) {
+    return <p>Error al cargar los detalles.</p>;
+  }
 
-    const album = data?.album?.[0];
+  const album = data?.album?.[0];
 
-    if (!album) {
-        return <p>No se encontró el álbum.</p>;
-    }
+  if (!album) {
+    return <p>No se encontró el álbum.</p>;
+  }
 
-    return (
-        <DetailContainer>
-            <BackLink as={Link} to="/">
-                ← Regresar
-            </BackLink>
+  return (
+    <div>
+      {album.strAlbumThumb && (
+        <img
+          src={album.strAlbumThumb}
+          alt={`Portada de ${album.strAlbum}`}
+          width="300"
+        />
+      )}
 
-            <AlbumTitle>
-                {album.strAlbum}
-            </AlbumTitle>
+      <h2>{album.strAlbum}</h2>
 
-            <ArtistName>
-                {album.strArtist}
-            </ArtistName>
+      <p>
+        <strong>Artista:</strong> {album.strArtist}
+      </p>
 
-            <AlbumInfo>
-                <strong>Año de lanzamiento:</strong>{" "}
-                {album.intYearReleased || "No disponible"}
-            </AlbumInfo>
+      <p>
+        <strong>Álbum:</strong> {album.strAlbum}
+      </p>
 
-            {album.strGenre && (
-                <AlbumInfo>
-                    <strong>Género:</strong>{" "}
-                    {album.strGenre}
-                </AlbumInfo>
-            )}
+      <p>
+        <strong>Año:</strong>{" "}
+        {album.intYearReleased || "No disponible"}
+      </p>
 
-            {album.strDescriptionEN && (
-                <AlbumDescription>
-                    {album.strDescriptionEN}
-                </AlbumDescription>
-            )}
+      {album.strGenre && (
+        <p>
+          <strong>Género:</strong> {album.strGenre}
+        </p>
+      )}
 
-            {album.strAlbumThumb && (
-                <AlbumImage
-                    src={album.strAlbumThumb}
-                    alt={album.strAlbum}
-                />
-            )}
-        </DetailContainer>
-    );
+      {album.strDescriptionEN && (
+        <p>
+          <strong>Descripción:</strong>{" "}
+          {album.strDescriptionEN}
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default SongDetail;
