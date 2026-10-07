@@ -1,5 +1,4 @@
 const { sumArray, countWords, findMax, isDivisible } = require('../functions.js');
-
 //SumArray
 describe("sumArray", () => {
     it('test with an array of positive numbers', () => {
@@ -19,7 +18,7 @@ describe("sumArray", () => {
 //CountWords
 describe("countWords", () => {
     it('test with a normal text string.', () => {
-        expect(countWords(['Hellow World'])).toBe(6);
+        expect(countWords('Hellow World')).toBe(2);
     });
     it('test with a string with spaces at the beginning and end.', () => {
         expect(countWords('  Hellow World  ')).toBe(2);
