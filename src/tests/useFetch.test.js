@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
-import useFetch from "../src/hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 
 jest.mock("axios");
 

@@ -2,8 +2,8 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import Song from "../src/components/Song/Song";
-import theme from "../src/styles/theme";
+import Song from "../components/Song/Song";
+import theme from "../styles/theme";
 
 describe("Song", () => {
   const song = {

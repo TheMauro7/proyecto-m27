@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import SearchBar from "../src/components/SearchBar/SearchBar";
-import theme from "../src/styles/theme";
+import SearchBar from "../components/SearchBar/SearchBar";
+import theme from "../styles/theme";
 
 const mockDispatch = jest.fn();
 
@@ -17,11 +17,11 @@ jest.mock("react-redux", () => ({
     }),
 }));
 
-jest.mock("../src/redux/slice/searchSlice", () => ({
+jest.mock("../redux/slice/searchSlice", () => ({
   fetchSongs: jest.fn(),
 }));
 
-const { fetchSongs } = require("../src/redux/slice/searchSlice");
+const { fetchSongs } = require("../redux/slice/searchSlice");
 
 const renderWithTheme = (component) => {
   return render(

@@ -2,7 +2,7 @@ import axios from "axios";
 import reducer, {
   fetchSongs,
   resetResults,
-} from "../src/redux/slice/searchSlice";
+} from "../redux/slice/searchSlice";
 
 jest.mock("axios");
 

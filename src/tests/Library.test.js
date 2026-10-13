@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import Library from "../src/components/Library/Library";
-import theme from "../src/styles/theme";
+import Library from "../components/Library/Library";
+import theme from "../styles/theme";
 
 const mockDispatch = jest.fn();
 
@@ -27,11 +27,11 @@ jest.mock("react-redux", () => ({
     }),
 }));
 
-jest.mock("../src/redux/slice/librarySlice", () => ({
+jest.mock("../redux/slice/librarySlice", () => ({
   removeSong: jest.fn(),
 }));
 
-const { removeSong } = require("../src/redux/slice/librarySlice");
+const { removeSong } = require("../redux/slice/librarySlice");
 
 const renderWithTheme = (component) => {
   return render(

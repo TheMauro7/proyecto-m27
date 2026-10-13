@@ -1,7 +1,7 @@
 import reducer, {
   addSong,
   removeSong,
-} from "../src/redux/slice/librarySlice";
+} from "../redux/slice/librarySlice";
 
 describe("librarySlice", () => {
   const song = {

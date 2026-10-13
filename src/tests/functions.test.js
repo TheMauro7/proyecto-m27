@@ -1,4 +1,4 @@
-const { sumArray, countWords, findMax, isDivisible } = require('../functions.js');
+const { sumArray, countWords, findMax, isDivisible } = require('../../functions');
 //SumArray
 describe("sumArray", () => {
     it('test with an array of positive numbers', () => {

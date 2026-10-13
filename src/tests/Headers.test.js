@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import Header from "../src/components/Header/Header";
-import theme from "../src/styles/theme";
+import Header from "../components/Header/Header";
+import theme from "../styles/theme";
 
 const renderWithTheme = (component) => {
   return render(

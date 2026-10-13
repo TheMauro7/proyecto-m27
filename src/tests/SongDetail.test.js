@@ -1,16 +1,16 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import SongDetail from "../src/components/SongDetail/SongDetail";
+import SongDetail from "../components/SongDetail/SongDetail";
 
 jest.mock("react-router-dom", () => ({
   useParams: jest.fn(),
 }));
 
-jest.mock("../src/hooks/useFetch");
+jest.mock("../hooks/useFetch");
 
 import { useParams } from "react-router-dom";
-import useFetch from "../src/hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 
 describe("SongDetail", () => {
   beforeEach(() => {

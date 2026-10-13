@@ -1,7 +1,8 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import App from "../src/App";
+import App from "../App";
+
 
 jest.mock("react-router-dom", () => ({
   Link: ({ children, ...props }) => (
@@ -15,13 +16,13 @@ jest.mock("react-router-dom", () => ({
   Route: ({ element }) => element,
 }));
 
-jest.mock("../src/components/Header/Header", () => {
+jest.mock("../components/Header/Header", () => {
   return function MockHeader({ appName }) {
     return <header>{appName}</header>;
   };
 });
 
-jest.mock("../src/components/SearchBar/SearchBar", () => {
+jest.mock("../components/SearchBar/SearchBar", () => {
   return function MockSearchBar() {
     return (
       <section>
@@ -36,7 +37,7 @@ jest.mock("../src/components/SearchBar/SearchBar", () => {
   };
 });
 
-jest.mock("../src/components/SearchResults/SearchResults", () => {
+jest.mock("../components/SearchResults/SearchResults", () => {
   return function MockSearchResults() {
     return (
       <section>
@@ -53,7 +54,7 @@ jest.mock("../src/components/SearchResults/SearchResults", () => {
   };
 });
 
-jest.mock("../src/components/Library/Library", () => {
+jest.mock("../components/Library/Library", () => {
   return function MockLibrary() {
     return (
       <section>
@@ -63,13 +64,13 @@ jest.mock("../src/components/Library/Library", () => {
   };
 });
 
-jest.mock("../src/components/SongDetail/SongDetail", () => {
+jest.mock("../components/SongDetail/SongDetail", () => {
   return function MockSongDetail() {
     return <div>Detalle del álbum</div>;
   };
 });
 
-jest.mock("../src/components/AppStyles", () => ({
+jest.mock("../components/AppStyles", () => ({
   AppContainer: ({ children }) => <main>{children}</main>,
 }));
 

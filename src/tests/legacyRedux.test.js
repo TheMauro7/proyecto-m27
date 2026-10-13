@@ -1,9 +1,9 @@
 import {
   addSong,
   removeSong,
-} from "../src/redux/libraryActions";
+} from "../redux/libraryActions";
 
-import libraryReducer from "../src/redux/libraryReducer";
+import libraryReducer from "../redux/libraryReducer";
 
 describe("libraryActions", () => {
   test("crea la acción ADD_SONG", () => {

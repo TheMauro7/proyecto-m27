@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import SearchResults from "../src/components/SearchResults/SearchResults";
-import theme from "../src/styles/theme";
+import SearchResults from "../components/SearchResults/SearchResults";
+import theme from "../styles/theme";
 
 const mockDispatch = jest.fn();
 
@@ -35,11 +35,11 @@ jest.mock("react-redux", () => ({
     }),
 }));
 
-jest.mock("../src/redux/slice/librarySlice", () => ({
+jest.mock("../redux/slice/librarySlice", () => ({
   addSong: jest.fn(),
 }));
 
-const { addSong } = require("../src/redux/slice/librarySlice");
+const { addSong } = require("../redux/slice/librarySlice");
 
 jest.mock("react-router-dom", () => ({
   Link: ({ children, ...props }) => (
